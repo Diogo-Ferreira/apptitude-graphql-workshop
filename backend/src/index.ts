@@ -35,55 +35,10 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     users: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(User);
-      return await repo.find();
+      return [];
     },
     posts: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(Post);
-      return await repo.find();
-    }
-  },
-  Post: {
-    likes: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(Post);
-      const post = await repo.findOne(parent.id, { relations: ["likes"] });
-      return post.likes || [];
-    },
-    auhtor: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(Post);
-      const post = await repo.findOne(parent.id, { relations: ["author"] });
-      console.log("coucou", post);
-      return post.author;
-    }
-  },
-  User: {
-    follows: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(User);
-      const user = await repo.findOne(parent.id, { relations: ["follows"] });
-      return user.follows || [];
-    },
-    followers: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(User);
-      const user = await repo.findOne(parent.id, { relations: ["followers"] });
-      return user.followers || [];
-    },
-    posts: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(User);
-      const user = await repo.findOne(parent.id, { relations: ["posts"] });
-      return user.posts || [];
-    },
-    likes: async (parent, args, context, info) => {
-      const { connection } = context;
-      const repo = connection.getRepository(User);
-      const user = await repo.findOne(parent.id, { relations: ["likes"] });
-      return user.likes || [];
+      return [];
     }
   }
 };
