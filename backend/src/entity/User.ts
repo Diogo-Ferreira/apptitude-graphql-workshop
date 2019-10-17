@@ -1,26 +1,37 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable
+} from "typeorm";
 import { Post } from "./Post";
 
 @Entity()
 export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  username: string;
 
-    @Column()
-    username: string;
+  @Column()
+  bio: string;
 
-    @Column()
-    bio: string;
+  @Column()
+  age: number;
 
-    @Column()
-    age: number;
+  @OneToMany(type => Post, post => post.author)
+  posts: Post[];
 
-    @OneToMany(type => Post, post => post.author)
-    posts: Post[];
+  @ManyToMany(type => User, follower => follower.follows)
+  followers: User[];
 
-    @ManyToMany(type => User, follower => follower.follows)
-    @JoinTable()
-    follows: User[]
+  @ManyToMany(type => User, followed => followed.followers)
+  @JoinTable()
+  follows: User[];
 
+  @ManyToMany(type => Post, post => post.likes)
+  likes: Post[];
 }

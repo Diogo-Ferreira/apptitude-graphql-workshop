@@ -1,19 +1,25 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
-import {User} from "./User";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  JoinTable
+} from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class Post {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  content: string;
 
-    @Column()
-    content: string;
+  @ManyToOne(type => User, user => user.posts)
+  author: User;
 
-    @ManyToOne(type => User, user => user.posts)
-    author: User;
-
-    @Column()
-    age: number;
-
+  @ManyToMany(type => User, user => user.likes)
+  @JoinTable()
+  likes: User[];
 }
